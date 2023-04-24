@@ -70,4 +70,3 @@ void do_exit(int fd, char *msg, int code)
 	/* exit with code */
 	exit(code);
 }
-
