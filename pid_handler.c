@@ -38,7 +38,6 @@ int _fork_fun(char **arg, char **av, char **env, char *lineptr, int np, int c)
 			free(arg);
 			free(lineptr);
 			exit(EXIT_FAILURE);
-		}
 	}
 	else
 	{
@@ -49,16 +48,18 @@ int _fork_fun(char **arg, char **av, char **env, char *lineptr, int np, int c)
 		}
 		if (WIFEXITED(status))
 		{
-			{			if (WEXITSTATUS(status) ! 0)
+			{			
+				if (WEXITSTATUS(status)!= 0)
 
 				return (WEXITSTATUS(status));
 			}
 		}
-		else if (WIFSIGNALED(STATUS))
+		else if (WIFSIGNALED(status))
 		{
-			printf("proccess %d killed by signal %d\n" pid, WTERMSIG(status));
+			printf("proccess %d killed by signal %d\n",pid, WTERMSIG(status));
 		}
 
 	}
 	return(0);
+	}
 }
