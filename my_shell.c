@@ -14,7 +14,7 @@ int get_line_number(int add)
 {
 
 	line_num = line_num + add;
-	return (line);
+	return (line_num);
 }
 
 /**
@@ -49,7 +49,7 @@ void print_error(char *command, int status, char *extra)
 	line_num = _itoa(get_line_number(0));
 	write(STDERR_FILENO, name, _strlen(name));
 	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, line_num, _strlen(line));
+	write(STDERR_FILENO, line_num, _strlen(line_num));
 
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, command, _strlen(command));
@@ -89,7 +89,7 @@ void print_error(char *command, int status, char *extra)
   * @envp: environment
   * Return: 0 if successful
   */
-static int line_num
+static int line_num;
 int main(int argc, char **argv, char **envp)
 {
 	char *filename = NULL;
@@ -99,10 +99,10 @@ int main(int argc, char **argv, char **envp)
 	if (argc > 2)
 		return (-1);
 
-		if (argv && argv[1])
+	if (argv && argv[1])
 		filename = argv[1];
-	signal(SIGINT, signal_handler);
-	do_env(envp, NULL);
+	signal(SIGINT, SIG_DFL);
+	do_env(envp[0], NULL);
 	get_line_number(1);
 
 	main_loop(filename);
