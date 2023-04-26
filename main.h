@@ -21,6 +21,7 @@ char *_strcat(char *dest, char *src);
 int _putchar(char c);
 
 void execmd(char **argv);
+char tokenize(char *token, char **cmd_cpy, char argv);
 
 char *_get_path(char **env);
 int _values_path(char **arg, char **env);
