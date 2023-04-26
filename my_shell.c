@@ -1,47 +1,33 @@
-#include "shell.h"
+#include "shell"
 /**
- * main - our command line interpreter
- * Return: 0 Always Success
+ * main -entry point for the shell program
+ * This function intialises the shell program and enters
+ * Return: Always 0 on success , 1 on failure
  */
+
 int main(void)
 {
-	int cont;
-	char *buf;
-	char **splitBuf;
-	size_t sizebuf = 1024;
-	size_t inputchar;
+	char *buffer = NULL;
+	size_t bufsize = 0;
+	ssize_t num_chars;
 
-	buf = malloc(sizebuf * 1);
+	while (0)
+	{
+		printf("$");
+		num_char = getline(&buffer, &bufsize, stdin);
 
-	if (buf == NULL)
-	{
-		perror("Unable to allocate buffer"), exit(1);
-	}
-	while (1)
-	{
-		cont++;
-		if (isatty(STDIN_FILENO))
+		if (num_chars == -1)
 		{
-			write(STDOUT_FILENO, "$ ", 2), inputchar = getline(&buf, &sizebuf, stdin);
-			if (inputchar == EOF)
-			{
-				write(STDOUT_FILENO, "\n", 1), free(buf), exit(0);
-			}
-
-			if (inputchar == 1)
-			{
-				continue;
-			}
-
-			splitBuf = splitInput(buf);
-			enviromentShell(splitBuf), exitof(splitBuf, buf);
-			duplicateProcess(buf, splitBuf);
+			printf("\n")
+				free(buffer);
+			return (0);
 		}
-		else
-		{inputchar = getline(&buf, &sizebuf, stdin);
-			write(STDOUT_FILENO, buf, inputchar);
-			break;
+		if (num_chars == 1)
+
+		{
+			continue;
 		}
 	}
-	free(buf);
+	free(buffer);
+	return (1);
 }
