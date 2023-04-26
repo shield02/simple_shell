@@ -12,25 +12,14 @@
 #include <sys/wait.h>
 
 extern char **environ;
+char *_error(char *namefile, char **buf);
 int _strlen(char *s);
-char **_get_token(char *lineptr);
-void _exit_command(char **args, char *lineptr, int _exit);
-int _fork_fun(char **arg, char **av, char **env,
-char *_strcpy(char *dest, char *src);
-char *_strcat(char *dest, char *src);
-int _putchar(char c);
-
-void execmd(char **argv);
-
-char *_get_path(char **env);
-int _values_path(char **arg, char **env);
-char *_getline_command(void);
-void _getenv(char **env);
-
-char *lineptr, int np, int c);
-char *_strtok(char *str, const char *delim);
-nt _strcmp(char *s1, char *s2);
-size_t _strncmp(char *s1, char *s2, size_t n);
-
+char *_strdup(char *str);
+int _strcmp(char *s1, char *s2);
+void _prompt(void);
+char **splitInput(char *array);
+void duplicateProcess(char *array, char **space);
+void enviromentShell(char **space);
+void exitof(char **space, char *array);
+void writeInput(char *buf);
 #endif
-
