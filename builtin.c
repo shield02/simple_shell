@@ -1,109 +1,73 @@
 #include "shell.h"
 /**
- * splitInput - Split the user input
- * @array: Is the string input
- * Return: The set of tokens
+ * split_iput - This will Split the user input
+ * @array: this  the string input
+ * Return: will returnThe set of tokens
  */
-char **splitInput(char *array)
+char **split_iput(char *array)
 {
-	int counter = 0, i = 0;
-	char *tokenC;
-	char *token;
-	char **space;
-	char *arrayCopy;
+	int i, num_tokens = 0;
+	char *copy, *token;
+	char **tokens;
+copy = strdup(input);
 
-	arrayCopy = strdup(array);
-	tokenC = strtok(arrayCopy, " \n\t");
+token = strtok(copy, "\n\t");
+while (token != NULL)
+{
+	num_tokens++;
+	token = strtok(NULL, "\n\t");
+}
+free(copy);
 
-	arrayCopy = _strdup(array);
-
-	while (tokenC != NULL)
-	{
-		tokenC = strtok(NULL, " \n\t");
-		counter++;
-	}
-	free(arrayCopy);
-
-	space = malloc(sizeof(char *) * (counter + 1));
-	token = strtok(array, " \n\t");
-
-	while (token != NULL)
-	{
-		space[i] = token;
-		token = strtok(NULL, " \n\t");
-		i++;
-	}
-	space[i] = NULL;
-	return (space);
+tokens = malloc(sizeof(char *) * (num_tokens + 1));
+if (tokens == NULL)
+	return (NULL);
+	i = 0;
+	token = strtok(input, "\n\t");
+while (token != NULL)
+{
+	token[i] = strdup(token);
+	token = strtok(NULL, "\n\t");
+	i++;
+}
+token[i] = NULL;
+return (tokens);
 }
 /**
-* duplicateProcess - Duplicate the calling process
-* @array: Is the string input
-* @space: The set of tokens
-* Return: Nothing
-*/
-void duplicateProcess(char *array, char **space)
+ * duplicate_process - Duplicate the calling process and execute the command
+ * @input: The user input string
+ * @tokens: The set of tokens
+ */
+void duplicate_process(char *input, char **tokens)
+
 {
-	pid_t my_pid;
 	pid_t pid;
 	int status;
 
 	pid = fork();
-
-	if (pid > 0)
+	if (pid == -1)
 	{
-		wait(&status);
+		perror("error: ");
+		return;
 	}
-	else if (pid == -1)
+	if (pid == 0)
 	{
-		perror("Error:");
-		free(array);
-		free(space);
-		exit(0);
+		execve(tokens[0], tokens, NULL);
+		perror("Error ocurred: ");
+		exit(EXIT_FAILURE);
 	}
-	else if (pid == 0)
-	{
-		if ((execve(space[0], space, NULL) == -1))
-		{
-			perror("Does not execute, write valid command");
-			free(array);
-			free(space);
-			exit(0);
-		}
-	}
+	else
+	wait(&status);
+	free(input);
+	free_tokens(tokens);
 }
 /**
- * enviromentShell - Gives the enviroment
- * @space: Is the set of tokens
- * Return: Nothing
+ * print_env - Print the environment variables
  */
-void enviromentShell(char **space)
+void print_env(void)
 {
-	char **environ;
-	int i = 0;
+	int i;
+	extern char **environ;
 
-	if (_strcmp(space[0], "env") == 0)
-	{
-		while (environ[i] != NULL)
-		{
-			write(STDOUT_FILENO, environ[i], strlen(environ[i]));
-			write(STDOUT_FILENO, "\n", strlen(environ[i]));
-			i++;
-		}
-	}
-}
-/**
- * exitof - Split the user input
- * @space: The set of tokens
- * @array: Is the string input
- * Return: Nothing
- */
-void exitof(char **space, char *array)
-{
-	if (_strcmp(space[0], "exit") == 0)
-	{
-		free(space);
-		free(array);
-		exit(0);
-	}
-}
+	for (i = 0; environ[i] !NULL; i++)
+	printf
