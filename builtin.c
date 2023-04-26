@@ -9,11 +9,8 @@ char **split_iput(char *array)
 	int i, num_tokens = 0;
 	char *copy, *token;
 	char **tokens;
-	
-	copy = strdup(input);
-/**
- * @copy: token counting the number of tokens in the input
- */
+copy = strdup(input);
+
 token = strtok(copy, "\n\t");
 while (token != NULL)
 {
@@ -21,17 +18,12 @@ while (token != NULL)
 	token = strtok(NULL, "\n\t");
 }
 free(copy);
-/**
- * @malloc allocates the memotry for the tokens array
- */
+
 tokens = malloc(sizeof(char *) * (num_tokens + 1));
 if (tokens == NULL)
 	return (NULL);
-/**
- *token copy tokens in to the array
- */
-i = o;
-token = strtok(input, "\n\t");
+	i = 0;
+	token = strtok(input, "\n\t");
 while (token != NULL)
 {
 	token[i] = strdup(token);
@@ -99,8 +91,8 @@ void free_tokens(char **tokens)
 {
 	int i;
 
-	for(i = 0; tokens[i] != NULL; i++)
-		free (tokens[i]);
+	for (i = 0; tokens[i] != NULL; i++)
+		free(tokens[i]);
 	free(token);
 }
 
