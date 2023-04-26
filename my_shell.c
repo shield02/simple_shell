@@ -1,50 +1,47 @@
 #include "shell.h"
 /**
- * main - main arguments functions
- * @ac:count of argumnents
- * @av: arguments
- * @env: environment
- * Return: _exit = 0.
+ * main - our command line interpreter
+ * Return: 0 Always Success
  */
-int main(int ac, char **av, char **env)
+int main(void)
 {
-	char *getcommand = NULL, **user_command = NULL;
-	int pathValue = 0, _exit = 0, n = 0;
-	(void)ac;
+	int cont;
+	char *buf;
+	char **splitBuf;
+	size_t sizebuf = 1024;
+	size_t inputchar;
 
+	buf = malloc(sizebuf * 1);
+
+	if (buf == NULL)
+	{
+		perror("Unable to allocate buffer"), exit(1);
+	}
 	while (1)
 	{
-		getcommand = _getline_command();
-		if (getcommand)
+		cont++;
+		if (isatty(STDIN_FILENO))
 		{
-			pathValue++;
-			user_command = _get_token(getcommand);
-			if (!user_command)
+			write(STDOUT_FILENO, "$ ", 2), inputchar = getline(&buf, &sizebuf, stdin);
+			if (inputchar == EOF)
 			{
-				free(getcommand);
+				write(STDOUT_FILENO, "\n", 1), free(buf), exit(0);
+			}
+
+			if (inputchar == 1)
+			{
 				continue;
 			}
-			if ((!_strcmp(user_command[0], "exit")) && user_command[1] == NULL)
-				_exit_command(user_command, getcommand, _exit);
-			if (!_strcmp(user_command[0], "env"))
-				_getenv(env);
-			else
-			{
-				n = _values_path(&user_command[0], env);
-				_exit = _fork_fun(user_command, av, env, getcommand, pathValue, n);
-				if (n == 0)
-					free(user_command[0]);
-			}
-			free(user_command);
+
+			splitBuf = splitInput(buf);
+			enviromentShell(splitBuf), exitof(splitBuf, buf);
+			duplicateProcess(buf, splitBuf);
 		}
 		else
-		{
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 1);
-			exit(_exit);
+		{inputchar = getline(&buf, &sizebuf, stdin);
+			write(STDOUT_FILENO, buf, inputchar);
+			break;
 		}
-		free(getcommand);
 	}
-	return (_exit);
+	free(buf);
 }
-
