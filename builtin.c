@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 /**
  * splitInput - Split the user input
  * @array: Is the string input
