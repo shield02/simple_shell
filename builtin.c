@@ -22,7 +22,7 @@ while (token != NULL)
 }
 free(copy);
 /**
- * Allocates the memotry for the tokens array
+ * @malloc allocates the memotry for the tokens array
  */
 tokens = malloc(sizeof(char *) * (num_tokens + 1));
 if (tokens == NULL)
@@ -92,7 +92,7 @@ void exit_shell(char *input, char **tokens)
 	exit(EXIT_SUCCESS);
 }
 /**
- * free_tokens - Free memoety allocated fo the tokens array
+ * free_tokens - Free memory allocated fo the tokens array
  * @tokens: The set of tokens
  */
 void free_tokens(char **tokens)
