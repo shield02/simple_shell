@@ -1,6 +1,6 @@
 #include "main.h"
 
-void ntcount(int num_tokens, char** argv, char* cmd_cpy);
+void ntcount(int num_tokens, char **argv, char *cmd_cpy);
 
 /**
  * main - UNIX command line interpreter
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 
 	(void)argc;
 
-	do{
+	do {
 		printf("%s", prompt);
 
 		nchars = getline(&cmd, &n, stdin);
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 
 /**
  * ntcount - UNIX command line interpreter
- * @num_count: int var - command line argument count
+ * @num_tokens: int var - command line argument count
  * @argv: char vector - vector for commands
  * @cmd_cpy: char vector - vector for commands
  *
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
  * type a command
  * Return: text of what was typed by user
  */
-void ntcount(int num_tokens, char** argv, char* cmd_cpy)
+void ntcount(int num_tokens, char **argv, char *cmd_cpy)
 {
 	const char *delim = " \n";
 	char *token;
