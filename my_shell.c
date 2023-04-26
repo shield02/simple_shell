@@ -1,111 +1,50 @@
 #include "shell.h"
-
 /**
- * handle_command - handles a single command input
- * @command: the input command string
- * @envp: the environment variable array
- * @path_value: the value of the PATH environment variable
- * @exit_status: the current exit status
- *
- * Return: the new exit status
+ * main - main arguments functions
+ * @ac:count of argumnents
+ * @av: arguments
+ * @env: environment
+ * Return: _exit = 0.
  */
-int handle_command(char *command, char **envp, int path_value, int exit_status)
+int main(int ac, char **av, char **env)
 {
-	char *args = NULL;
-	char *input_file = NULL;
-	char *output_file = NULL;
-	int n = 0;
-
-	args = _get_token(command);
-	if (!args)
-		return (exit_status);
-
-	for (int i = 0; args[i]; i++)
-	{
-		if (!strcmp(args[i], "<"))
-		{
-			input_file = args[i + 1];
-			args[i] = NULL;
-			break;
-		}
-		else if (!strcmp(args[i], ">"))
-		{
-			output_file = args[i + 1];
-			args[i] = NULL;
-			break;
-		}
-	}
-
-	if ((!_strcmp(args[0], "exit")) && args[1] == NULL)
-	{
-		_exit_command(args, command, exit_status);
-	}
-	else if (!_strcmp(args[0], "env"))
-	{
-		_getenv(envp);
-	}
-	else
-	{
-		n = _values_path(&args[0], envp);
-		exit_status = _fork_fun(args, envp, command, path_value, 
-				n, input_file, output_file);
-		if (n == 0)
-			free(args);
-	}
-
-	free(args);
-
-	return (exit_status);
-}
-
-/**
- * handle_input - handles a single line of input
- * @envp: the environment variable array
- * @path_value: the value of the PATH environment variable
- * @exit_status: the current exit status
- *
- * Return: the new exit status
- */
-int handle_input(char **envp, int path_value, int exit_status)
-{
-	char *command = NULL;
-
-	command = _getline_command();
-	if (!command)
-	{
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "\n", 1);
-		exit(exit_status);
-	}
-
-	path_value++;
-	exit_status = handle_command(command, envp, path_value, exit_status);
-
-	free(command);
-
-	return (exit_status);
-}
-
-/**
- * main - main functions that runs the shell
- * @agrc: argument  count
- * @argv: array of arguments strings
- * @envp: array of environment variables strings
- *
- * Return: exit status
- */
-int main(int argc, char **argv, char **envp)
-{
-	int exit_status = 0;
-	int path_value = 0;
-
-	signal(SIGINT, sigint_handler);
+	char *getcommand = NULL, **user_command = NULL;
+	int pathValue = 0, _exit = 0, n = 0;
+	(void)ac;
 
 	while (1)
 	{
-		exit_status = handle_input(envp, path_value, exit_status);
+		getcommand = _getline_command();
+		if (getcommand)
+		{
+			pathValue++;
+			user_command = _get_token(getcommand);
+			if (!user_command)
+			{
+				free(getcommand);
+				continue;
+			}
+			if ((!_strcmp(user_command[0], "exit")) && user_command[1] == NULL)
+				_exit_command(user_command, getcommand, _exit);
+			if (!_strcmp(user_command[0], "env"))
+				_getenv(env);
+			else
+			{
+				n = _values_path(&user_command[0], env);
+				_exit = _fork_fun(user_command, av, env, getcommand, pathValue, n);
+				if (n == 0)
+					free(user_command[0]);
+			}
+			free(user_command);
+		}
+		else
+		{
+			if (isatty(STDIN_FILENO))
+				write(STDOUT_FILENO, "\n", 1);
+			exit(_exit);
+		}
+		free(getcommand);
 	}
-
-	return (exit_status);
+	return (_exit);
 }
 
