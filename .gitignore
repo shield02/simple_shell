@@ -1,6 +1,6 @@
 sandbox
 shell
-prepdir
-prepdir/*.c
-prepdir/*.h
-prepdir/hsh
+./prepdir
+./prepdir/*.c
+./prepdir/*.h
+./prepdir/hsh
