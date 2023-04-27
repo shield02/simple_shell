@@ -23,6 +23,9 @@
 
 void ntcount(int num_tokens, char **argv, char *cmd_cpy);
 void execmd(char **argv);
+char *_strcpy(char *dest, char *src);
+char *_get_path(char **env);
+char *_strcat(char *dest, char *src);
 
 /*
  * char *_get_path(char **env);
@@ -32,7 +35,7 @@ void execmd(char **argv);
  *
  * char *lineptr, int np, int c);
  * char *_strtok(char *str, const char *delim);
- * nt _strcmp(char *s1, char *s2);
+ * i nt _strcmp(char *s1, char *s2);
  * size_t _strncmp(char *s1, char *s2, size_t n);
 */
 
