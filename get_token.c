@@ -1,113 +1,113 @@
 #include "main.h"
-#include <string.h>
-#include <stdlib.h>
 
 /**
- * _get_token - This function will get tokens from a string.
- * @lineptr: The string entered by the user.
- * Return: A pointer to an array of tokens.
+ * strtow - splits a string into words. Repeat delimiters are ignored
+ * @str: the input string
+ * @d: the delimiter string
+ *
+ * Return: a pointer to an array of strings, or NULL on failure
  */
-char **_get_token(char *lineptr)
+char **strtow(char *str, char *d)
 {
-	char **command = NULL;
-	char *token = NULL;
-	size_t i = 0;
-	int size = 0;
-/**
- * char *exit_value[] = {"0", "1", "126", "127", "128", "130", "255", NULL};
- */
+    int i, j, k, m, numwords = 0;
+    char **s;
 
-	if (lineptr == NULL)
-		return (NULL);
+    if (str == NULL || str[0] == '\0')
+        return (NULL);
 
-	for (i = 0; lineptr[i]; i++)
-	{
-		if (lineptr[i] == ' ')
-			size++;
-	}
-	if (size + 1 == (int)strlen(lineptr))
-		return (NULL);
+    if (!d)
+        d = " ";
 
-	command = malloc(sizeof(char *));
-	if (command == NULL)
-	{
-		perror("malloc");
-		exit(1);
-	}
-	token = strtok(NULL, " \n\t\r");
-	for (i = 0; token != NULL; i++)
-	{
-		command = realloc(command, sizeof(char *) * (i + 1));
-		if (command == NULL)
-		{
-			perror("realloc");
-			exit(1);
-		}
-		command[i] = malloc(sizeof(char) * (strlen(token) + 1));
-		if (command[i] == NULL)
-		{
-			perror("malloc");
-			exit(1);
-		}
-		strcpy(command[i], token);
-		token = strtok(NULL, "\n\t\r");
-	}
-	command = realloc(command, sizeof(char *) * (i + 1));
-	if (command == NULL)
-	{
-		perror("realloc");
-		exit(1);
-	}
-	command[i] = NULL;
-	for (i = 0; builtins[i] != NULL; i++)
-	{
-		if (strcmp(command[0], builtins[i]) == 0)
-		{
-			free(command);
-			return (NULL);
-		}
-	}
-	return (command);
+    for (i = 0; str[i] != '\0'; i++)
+        if (!is_delim(str[i], d) && (is_delim(str[i + 1], d) || !str[i + 1]))
+            numwords++;
+
+    if (numwords == 0)
+        return (NULL);
+
+    s = malloc((1 + numwords) * sizeof(char *));
+    if (!s)
+        return (NULL);
+
+    for (i = 0, j = 0; j < numwords; j++)
+    {
+        while (is_delim(str[i], d))
+            i++;
+
+        k = 0;
+        while (!is_delim(str[i + k], d) && str[i + k])
+            k++;
+
+        s[j] = malloc((k + 1) * sizeof(char));
+        if (!s[j])
+        {
+            for (k = 0; k < j; k++)
+                free(s[k]);
+            free(s);
+            return (NULL);
+        }
+
+        for (m = 0; m < k; m++)
+            s[j][m] = str[i++];
+
+        s[j][m] = '\0';
+    }
+
+    s[j] = NULL;
+    return (s);
 }
 
 /**
- * main - The entry point of the program.
- * Return: Always 0.
+ * strtow2 - splits a string into words
+ * @str: the input string
+ * @d: the delimiter
+ *
+ * Return: a pointer to an array of strings, or NULL on failure
  */
-int main(void)
+char **strtow2(char *str, char d)
 {
-	char *user_input = NULL;
-	char **tokens = NULL;
+    int i, j, k, m, numwords = 0;
+    char **s;
 
-	user_input = malloc(sizeof(char) * 1024);
-	if (user_input == NULL)
-	{
-		perror("malloc");
-		exit(1);
-	}
-	while (1)
-	{
-		printf("$ ");
-		fflush(stdout);
-		fgets(user_input, 1024, stdin);
-		user_input[strcspn(user_input, "\n")] = '\0';
-		tokens = _get_token(user_input);
-		if (tokens == NULL)
-		{
-			printf("Invalid command\n");
-			continue;
-		}
-		for (size_t i = 0; tokens[i] != NULL; i++)
-		{
-			printf("Token %zu: %s\n", i, tokens[i]);
-		}
-		for (size_t i = 0; tokens[i] != NULL; i++)
-		{
-			free(tokens[i]);
-		}
-		free(tokens);
-	}
-	free(user_input);
-	return (0);
+    if (str == NULL || str[0] == '\0')
+        return (NULL);
+
+    for (i = 0; str[i] != '\0'; i++)
+        if ((str[i] != d && str[i + 1] == d) ||
+            (str[i] != d && !str[i + 1]) || str[i + 1] == d)
+            numwords++;
+
+    if (numwords == 0)
+        return (NULL);
+
+    s = malloc((1 + numwords) * sizeof(char *));
+    if (!s)
+        return (NULL);
+
+    for (i = 0, j = 0; j < numwords; j++)
+    {
+        while (str[i] == d && str[i] != d)
+            i++;
+
+        k = 0;
+        while (str[i + k] != d && str[i + k] && str[i + k] != d)
+            k++;
+
+        s[j] = malloc((k + 1) * sizeof(char));
+        if (!s[j])
+        {
+            for (k = 0; k < j; k++)
+                free(s[k]);
+            free(s);
+            return (NULL);
+        }
+
+        for (m = 0; m < k; m++)
+            s[j][m] = str[i++];
+
+        s[j][m] = '\0';
+    }
+
+    s[j] = NULL;
+    return (s);
 }
-

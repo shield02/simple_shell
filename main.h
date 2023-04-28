@@ -19,8 +19,10 @@
  * char *_strcpy(char *dest, char *src);
  * char *_strcat(char *dest, char *src);
  * int _putchar(char c);
+*
 */
-
+char **strtow(char *str, char *d);
+char **strtow2(char *str, char d);
 void ntcount(int num_tokens, char **argv, char *cmd_cpy);
 void execmd(char **argv);
 char **_get_token(char *lineptr);
@@ -29,8 +31,10 @@ char *_get_path(char **env);
 char *_strcat(char *dest, char *src);
 extern char *builtins[];
 int _execve(char **);
+int is_delim(char c, char *delim);
+int is_delim(char, char *);
 /*
- * char *_get_path(char **env);
+ *char *_get_path(char **env);
  * int _values_path(char **arg, char **env);
  * char *_getline_command(void);
  * void _getenv(char **env);
