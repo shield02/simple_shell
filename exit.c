@@ -1,68 +1,38 @@
 #include "main.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
- * _strncpy - Copies a string
- * @dest: The destination string to be copied to
- * @src: The source string
- * @n: The amount of characters to be copied
+ * _strdup - This will returns a pointer which contains a coopi of the string
+ * given as a parameter
+ * @str: This is the string to print
  *
- * Return: The concatenated string
+ *
+ * Return: This is a pointer to the duplicated string or NULL if insufficient
+ * memory was available
  */
-char *_strncpy(char *dest, char *src, int n)
+char *_strdup(char *str)
 {
 	int i;
+	char *coopi;
 
-	for (i = 0; src[i] != '\0' && i < n; i++)
-		dest[i] = src[i];
-
-	for (; i < n; i++)
-		dest[i] = '\0';
-
-	return (dest);
-}
-
-/**
- * _strncat - Concatenates two strings
- * @dest: The first string
- * @src: The second string
- * @n: The amount of bytes to be maximally used
- *
- * Return: The concatenated string
- */
-char *_strncat(char *dest, char *src, int n)
-{
-	int i, j;
-
-	for (i = 0; dest[i] != '\0'; i++)
-		;
-
-	for (j = 0; src[j] != '\0' && j < n; j++)
-		dest[i + j] = src[j];
-
-	dest[i + j] = '\0';
-
-	return (dest);
-}
-
-/**
- * _strchr - Locates a character in a string
- * @s: The string to be parsed
- * @c: The character to look for
- *
- * Return: A pointer to the memory area s
- */
-char *_strchr(char *s, char c)
-{
-	while (*s != '\0')
+	if (str == '\0')
 	{
-		if (*s == c)
-			return (s);
-		s++;
+		return ('\0');
 	}
-
-	if (c == '\0')
-		return (s);
-
-	return (NULL);
+	i = _strlen(str);
+	coopi = malloc(sizeof(char) * i + 1);
+	if (coopi == '\0')
+	{
+		return ('\0');
+	}
+	else
+	{
+		for (i = 0 ; str[i] != '\0' ; i++)
+		{
+			coopi[i] = str[i];
+		}
+	}
+	coopi[i] = '\0';
+	return (coopi);
 }
-
