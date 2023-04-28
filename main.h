@@ -23,6 +23,7 @@
 
 void ntcount(int num_tokens, char **argv, char *cmd_cpy);
 void execmd(char **argv);
+char **_get_token(char *lineptr);
 char *_strcpy(char *dest, char *src);
 char *_get_path(char **env);
 char *_strcat(char *dest, char *src);
