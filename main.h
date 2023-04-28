@@ -31,8 +31,7 @@ char *_get_path(char **env);
 char *_strcat(char *dest, char *src);
 extern char *builtins[];
 int _execve(char **);
-int is_delim(char c, char *delim);
-int is_delim(char, char *);
+
 /*
  *char *_get_path(char **env);
  * int _values_path(char **arg, char **env);
