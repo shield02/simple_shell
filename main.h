@@ -32,7 +32,7 @@ char *_get_path(char **env);
 char *_strcat(char *dest, char *src);
 extern char *builtins[];
 int _execve(char **);
-char *_strncpy(char *dest, char *src, int n)
+char *_strncpy(char *dest, char *src, int n);
   
 /*
  *char *_get_path(char **env);
