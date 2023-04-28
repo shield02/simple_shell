@@ -13,6 +13,7 @@ char **_get_token(char *lineptr)
 	char *token = NULL;
 	size_t i = 0;
 	int size = 0;
+	char exit_value[] = ("0", "1", "126", "127", "128", "130", "255", NULL};
 
 	if (lineptr == NULL)
 	return (NULL);
@@ -24,23 +25,44 @@ char **_get_token(char *lineptr)
 	}
 	if (size + 1 == (int)strlen(lineptr))
 	return (NULL);
-	token = strtok(lineptr, " \n\t\r");
-	for (i = 0; token != NULL; i++)
-	{
-		command[i] = malloc(sizeof(char) * (strlen(token) + 1));
-	if (command[i] == NULL)
+	command = malloc(sizeof(char *));
+	if (command == NULL)
 	{
 		perror("malloc");
 		exit(1);
 	}
-	strcpy(command[i], token);
 	token = strtok(NULL, " \n\t\r");
+	for (i = 0; token != NULL; i++)
 	}
-	command[i] = NULL;
-	for (i = i + 1; i < size + 2; i++)
+	command = realloc(command, sizeof(char *) * (i + 1));
+	if (command == NULL)
 	{
-		command[i] = NULL;
+		perror("realloc");
+		exit[i];
 	}
+	command[i] malloc(sizeof(char) * (strlen(token) + 1));
+	if (command[i] == NULL)
+{
+	perror("malloc");
+	exit(1);
+	strcpy(command[i], token);
+	token = strtok(NULL, "\n\t\r");
+}
+command = realloc(command, sizeof(char *) * (i + 1));
+if (command == NULL)
+{
+	perror("realloc");
+	exit(1);
+}
+	command[i] = NULL;
+	for (i = 0; buildins[i] !NULL; i++)
+
+	if (strcmp(command[0], builtins[i]) == 0)
+{
+	free(command);
+
+	return (NULL);
+}
 	return (command);
 }
 
@@ -66,11 +88,11 @@ int main(void)
 		fgets(user_input, 1024, stdin);
 	user_input[strcspn(user_input, "\n")] = '\0';
 	tokens = _get_token(user_input);
-	for (int i = 0; tokens[i] != NULL; i++)
+	for (size_t i = 0; tokens[i] != NULL; i++)
 	{
-		printf("Token %d: %s\n", i, tokens[i]);
+		printf("Token %zu: %s\n", i, tokens[i]);
 	}
-	for (int i = 0; tokens[i] != NULL; i++)
+	for (size_t i = 0; tokens[i] != NULL && tokens[i] != NULL i++)
 	{
 		free(tokens[i]);
 	}
