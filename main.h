@@ -31,11 +31,7 @@ char *_strcpy(char *dest, char *src);
 char *_get_path(char **env);
 char *_strcat(char *dest, char *src);
 extern char *builtins[];
-<<<<<<< HEAD
 int _execve(char **);
-=======
->>>>>>> 41c9f045cf92d5b6e198f31750b2240afdb5f1d0
-<<<<<<< HEAD
 char *_strncpy(char *dest, char *src, int n)
   
 /*
