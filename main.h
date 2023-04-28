@@ -21,6 +21,7 @@
  * int _putchar(char c);
 *
 */
+
 char **strtow(char *str, char *d);
 char **strtow2(char *str, char d);
 void ntcount(int num_tokens, char **argv, char *cmd_cpy);
@@ -32,6 +33,7 @@ char *_strcat(char *dest, char *src);
 extern char *builtins[];
 <<<<<<< HEAD
 char *_strncpy(char *dest, char *src, int n)
+  
 /*
  *char *_get_path(char **env);
  * int _values_path(char **arg, char **env);
