@@ -33,7 +33,6 @@ extern char *builtins[];
 int _myexit(info_t *);
 int _mycd(info_t *);
 int _myhelp(info_t *);
-int _execve(char **);
 <<<<<<< HEAD
 char *_strncpy(char *dest, char *src, int n)
 char *_strdup(char *str);
