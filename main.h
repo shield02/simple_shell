@@ -30,9 +30,6 @@ char *_strcpy(char *dest, char *src);
 char *_get_path(char **env);
 char *_strcat(char *dest, char *src);
 extern char *builtins[];
-int _myexit(info_t *);
-int _mycd(info_t *);
-int _myhelp(info_t *);
 <<<<<<< HEAD
 char *_strncpy(char *dest, char *src, int n)
 char *_strdup(char *str);
