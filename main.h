@@ -27,7 +27,8 @@ char **_get_token(char *lineptr);
 char *_strcpy(char *dest, char *src);
 char *_get_path(char **env);
 char *_strcat(char *dest, char *src);
-
+extern char *builtins[];
+int _execve(char **);
 /*
  * char *_get_path(char **env);
  * int _values_path(char **arg, char **env);
