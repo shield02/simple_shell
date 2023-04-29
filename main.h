@@ -33,10 +33,7 @@ char *_strcat(char *dest, char *src);
 extern char *builtins[];
 int _execve(char **);
 char *_strncpy(char *dest, char *src, int n);
-char **splitInput(char *array);
-void duplicateProcess(char *array, char **space);
-void enviromentShell(char **space);
-void exitof(char **space, char *array);
+
   
 /*
  *char *_get_path(char **env);
